@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <link rel="stylesheet" href="../ToDoList/css/style.css" type="text/css">
+        <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+        <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <style>
+            
+        </style>
+        <title></title>
+    </head>
+    <body ng-app="ToDo" ng-cloak>
+        <div ng-controller="ToDoController" class="mainClass" style=" max-width: 400px">
+            <header class="padding-15 bgc-grey font-arial-15">
+                <h3>To Do List</h3>
+            </header>
+            <ul style="margin: 0px; padding-left: 0px;">
+                <li ng-repeat="todo in toDo" class="padding-15">
+                    <div class="taskCompleted_{{todo.state}}">
+                        
+                            <input type="checkbox" ng-model="todo.state" style="margin: 10px">{{todo.name}} 
+                            <input type="text" value="{{todo.name}}" ng-model="updateValue" ng-hide="editBoxState">
+                        
+                        <button class="glyphicon glyphicon-ok font-span" ng-click="updateTask($index)" ng-hide="editBoxState"></button>
+                        <span class="float-right font-span glyphicon glyphicon-remove" ng-click="removeTask($index)"></span>
+                        <!--<span ng-click="editBox($index)" class="float-right font-span glyphicon glyphicon-edit" ></span>-->
+                        
+                    </div>
+                </li>
+            </ul>
+            <div class ="bgc-grey" style="padding: 15px">
+                <input class="task-inputBox" placeholder="Add task here" type="text" ng-model="task">
+                <button class="addBtn" ng-click="addTask()"> ADD </button>
+            </div>
+            <footer ng-bind="message" class="padding-15" ng-hide="displayMsg">
+                
+            </footer>
+            <div style="padding:4px">
+                Completed: {{remaining()}} of {{toDo.length}} 
+            </div>
+        </div>
+    </body>
+    <script>
+        var toDoModule = angular.module("ToDo", [])
+        toDoModule.controller("ToDoController", ['$scope', '$filter', function ($scope, $filter) {
+            $scope.toDo = [{ name: "Learn ECMAScript", state: false }, {name: "Eat apple", state: false}];
+            $scope.editBoxState = true;
+            $scope.displayMsg = true;
+            $scope.addTask = function () {
+                if (!$scope.task) { return; }
+                else {
+                    $scope.displayMsg = true;
+                    if ($filter('getIndexByName')($scope.toDo, $scope.task)) {
+                        $scope.message = "Item is already in the list";
+                        $scope.displayMsg = false;
+                    } else {
+                        $scope.toDo.push({ name: $scope.task, state: false });
+                        $scope.task = '';
+                    }
+                }
+            };
+
+            $scope.removeTask = function (indx) {
+                var item = $scope.toDo[indx].name;
+                $scope.toDo.splice(indx, 1);
+                $scope.message = "Removed item [" + item + "] successfully.";
+                $scope.displayMsg = false;
+            };
+
+            $scope.updateTask = function (indx) {
+                $scope.display = true;
+                $scope.updateValue = $scope.toDo[indx].name;
+                //$scope.updateValue = '';
+                //$scope.editBoxState = true;
+            };
+
+            $scope.editBox = function () {
+                $scope.editBoxState = false;
+                $scope.displayMSg = true;
+            };
+
+            $scope.remaining = function () {
+                var count = 0;
+                angular.forEach($scope.toDo, function (todo) {
+                    count += todo.state ? 1 : 0;
+                });
+                return count;
+            };
+        } ]);
+        toDoModule.filter("getIndexByName", function () {
+            return function (obj, value) {
+                var i = 0;
+                var len = obj.length;
+                for (; i < len; i++) {
+                    if (obj[i].name === value)
+                        return true;
+                }
+                return false;
+            }
+        });
+    </script>
+</html>

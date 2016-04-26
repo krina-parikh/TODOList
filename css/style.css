@@ -1,0 +1,56 @@
+body {
+    margin: 70px;
+
+}
+.mainClass {
+    border-radius: 5px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+            .font-arial-15{
+                font: 15px arial, sans-serif;
+                line-height: 1.5;
+            }
+            .font-span{
+                color: #0094ff;
+                padding: 5px 5px 0px 0px;
+            }
+            .bgc-grey{
+                background: rgba(0, 0, 0, 0.09);
+                
+            }
+            .padding-15{
+                padding: 15px;
+            }
+            li{
+                border: 1px solid rgba(0, 0, 0, 0.19);
+                list-style-type: none;
+                list-style-position: outside;
+                margin-left: 0px;
+            }
+            .float-right{
+                float: right;
+                padding-right: 8px;
+            }
+            .taskCompleted_true{
+                text-decoration: line-through;
+            }
+            .task-inputBox{
+                padding: 8px 16px;
+                width: 80%;
+                font-size: 15px;
+                line-height: 1.5;
+                display: inline-block;
+            }
+            .addBtn{
+                background-color: #4CAF50; /* Green */
+                border: none;
+                color: white;
+                padding: 8px 16px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 15px;
+            }
+            footer{
+                background: #fcf8e3;
+            }
